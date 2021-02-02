@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content%}
+{% comment %}
+    {% load patient_tags %}
+    {% get_doctors as doctors %}
+{% endcomment %}
+
+<table class="table" id="table">
+    <thead>
+    <tr>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Отделение</th>
+        <th>Стаж</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in object_list %}
+    <tr>
+        <td><a href="{{ item.get_absolute_url }}">{{ item.surname }}</a></td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.second_name }}</td>
+        <td>{{ item.department.name }}</td>
+        <td>{{ item.severity_disease }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

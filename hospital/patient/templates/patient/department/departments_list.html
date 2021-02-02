@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content%}
+
+{% load patient_tags %}
+{% get_departments as departments %}
+
+<table class="table" id="table">
+    <thead>
+    <tr>
+        <th>Отделения</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in departments %}
+    <tr>
+        <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
