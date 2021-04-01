@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-8">
+        <h1>Редактирование новости</h1>
+        <form action="{% url 'patient_edit' object.pk %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ form.non_field.errors }}
+           <input type="submit" class="btn btn-dark" value="Применить">
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}}
+
+{% block content %}
+
+    <div class="card" style="width: 100%; margin-top: 25px; margin: auto">
+        <div class="card-header">
+            Врач: {{ doctor }}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item card-text">Текущие пациенты:
+            {% for item in patient %}
+            <li class="list-group-item card-text text-muted"><a href="{% url 'patient' item.pk %}">{{ item }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

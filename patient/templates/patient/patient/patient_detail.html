@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h3 class=m-3>Пациент {{ object }}</h3>
+    <div class="container" style="width: 60%;">
+        <form action="{% url 'patient_edit' object.pk %}" method="get">
+            {% csrf_token %}
+            {{ object.non_field_errors }}
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="id_surname">Фамилия:</label>
+                    <input type="text" name="surname" class="form-control" maxlength="100" id="id_surname"
+                           value="{{ object.surname }}" readonly>
+                </div>
+                <div class="form-group col-md">
+                    <label for="id_name">Имя:</label>
+                    <input type="text" name="name" class="form-control" maxlength="100" id="id_name"
+                           value="{{ object.name }}" readonly>
+                </div>
+                <div class="form-group col-md">
+                    <label for="id_second_name">Отчество:</label>
+                    <input type="text" name="second_name" class="form-control" maxlength="100" id="id_second_name"
+                           value="{{ object.second_name }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="id_social_security_number">Номер социального страхования:</label>
+                    <input type="text" name="social_security_number" class="form-control" maxlength="100"
+                           id="id_social_security_number"
+                           value="{{ object.social_security_number }}" readonly>
+                </div>
+                <div class="form-group col-md">
+                    <label for="id_admitted_hospital_date">Дата поступления в больницу:</label>
+                    <input type="datetime" name="admitted_hospital_date" class="form-control" maxlength="100"
+                           id="id_admitted_hospital_date"
+                           value="{{ object.admitted_hospital_date }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="id_sex">Пол:</label>
+                    <input type="text" name="sex" class="form-control" maxlength="100" id="id_sex"
+                           value="{{ object.sex }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_pre_age">Возраст:</label>
+                    <input type="text" name="pre_age" class="form-control" maxlength="100" id="id_pre_age"
+                           value="{{ object.pre_age }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_height">Рост:</label>
+                    <input type="text" name="height" class="form-control" maxlength="100" id="id_height"
+                           value="{{ object.height }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="id_hair_color">Цвет волос:</label>
+                    <input type="text" name="hair_color" class="form-control" maxlength="100" id="id_hair_color"
+                           value="{{ object.hair_color }}" readonly>
+                </div>
+                <div class="form-group col-md">
+                    <label for="id_special_signs">Особые приметы:</label>
+                    <input type="text" name="special_signs" class="form-control" maxlength="100" id="id_special_signs"
+                           value="{{ object.special_signs }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="id_provisional_diagnosis">Диагноз:</label>
+                    <input type="text" name="provisional_diagnosis" class="form-control" maxlength="100"
+                           id="id_provisional_diagnosis"
+                           value="{{ object.provisional_diagnosis }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_severity_disease">Текущее состояние:</label>
+                    <input type="text" name="severity_disease" class="form-control" maxlength="100"
+                           id="id_severity_disease"
+                           value="{{ object.severity_disease }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_doctor">Лечащий врач:</label>
+                    <input type="text" name="doctor" class="form-control" maxlength="100" id="id_doctor"
+                           value="{{ object.doctor }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="id_medical_history">История болезни:</label>
+                    <textarea name="medical_history" cols="40" rows="10" class="form-control" id="id_medical_history"
+                              readonly>{{ object.medical_history }}</textarea>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="id_medical_history"></label>
+
+                    <select name="history" id="id_history" size="13" aria-readonly="true">
+                        <option value="">История перемещений:</option>
+                        {% for item in movement %}
+                            <option>{{ item.ward_movement_date }}, {{ item.prev_ward_number }}
+                                -> {{ item.current_ward_number }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="id_department">Отделение:</label>
+                    <input type="text" name="department" class="form-control" maxlength="100" id="id_department"
+                           value="{{ object.department }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_ward">Палата:</label>
+                    <input type="text" name="ward" class="form-control" maxlength="100" id="id_ward"
+                           value="{{ object.ward }}" readonly>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="id_change_ward_date">Дата определения в палату:</label>
+                    <input type="datetime" name="change_ward_date" class="form-control" maxlength="100"
+                           id="id_change_ward_date"
+                           value="{{ object.change_ward_date }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="id_how_admitted">Как поступил:</label>
+                    <input type="text" name="how_admitted" class="form-control" maxlength="100" id="id_how_admitted"
+                           value="{{ object.how_admitted }}" readonly>
+                </div>
+                <div class="form-group col-md">
+                    <label for="id_current_status">Текущий статус:</label>
+                    <input type="text" name="current_status" class="form-control" maxlength="100" id="id_current_status"
+                           value="{{ object.current_status }}" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_is_discharged"> Пациент выписан:</label>
+                <input type="checkbox" name="is_discharged" id="id_is_discharged" readonly
+                       value="" {% if object.is_discharged %} checked {% endif %}>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md">
+                    <label for="id_discharged_hospital_date">Дата выписки из больницы:</label>
+                    <input type="date" name="discharged_hospital_date" class="form-control" maxlength="100"
+                           id="id_discharged_hospital_date"
+                           value="{{ object.discharged_hospital_date }}" readonly>
+                </div>
+                <div class="form-group col-md">
+                    <label for="id_cause_discharged">Основание для выписки:</label>
+                    <input type="text" name="cause_discharged" class="form-control" maxlength="100"
+                           id="id_cause_discharged"
+                           value="{{ object.cause_discharged }}" readonly>
+                </div>
+            </div>
+            <div class="text-right m-3">
+                <input type="submit" class="btn btn-dark" value="Редактирование">
+            </div>
+        </form>
+    </div>
+    <div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+.errorlist {
+    color: #dc3545;
+    list-style-type: none;
+}
+
+body {
+
+}
+
+a:link {
+    color: #212529;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: #212529;
+    text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+  color: #000000;
+  text-decoration: none;
+}
+
+.page {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    text-align: right;
+    background-color: #cccccc;
+}

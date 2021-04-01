@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content%}
+<h3 class=m-3>Новый пациент</h3>
+<div class="container" style="width: 60%;">
+    <form action="{% url 'add_patient' %}" method="post">
+        {% csrf_token %}
+        {{ form.non_field.errors }}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.surname.label_tag }}
+                    {{ form.surname }}
+                    {{ form.surname.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.name.label_tag }}
+                    {{ form.name }}
+                    {{ form.name.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.second_name.label_tag }}
+                    {{ form.second_name }}
+                    {{ form.second_name.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                {{ form.social_security_number.label_tag }}
+                    {{ form.social_security_number }}
+                    {{ form.social_security_number.errors }}
+            </div>
+            <div class="form-group col-md">
+                {{ form.admitted_hospital_date.label_tag }}
+                    {{ form.admitted_hospital_date }}
+                    {{ form.admitted_hospital_date.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.sex.label_tag }}
+                    {{ form.sex }}
+                    {{ form.sex.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.pre_age.label_tag }}
+                    {{ form.pre_age }}
+                    {{ form.pre_age.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.height.label_tag }}
+                    {{ form.height }}
+                    {{ form.height.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.hair_color.label_tag }}
+                    {{ form.hair_color }}
+                    {{ form.hair_color.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.special_signs.label_tag }}
+                    {{ form.special_signs }}
+                    {{ form.special_signs.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.provisional_diagnosis.label_tag }}
+                    {{ form.provisional_diagnosis }}
+                    {{ form.provisional_diagnosis.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.severity_disease.label_tag }}
+                    {{ form.severity_disease }}
+                    {{ form.severity_disease.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.doctor.label_tag }}
+                    {{ form.doctor }}
+                    {{ form.doctor.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+                {{ form.medical_history.label_tag }}
+                    {{ form.medical_history }}
+                    {{ form.medical_history.errors }}
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.department.label_tag }}
+                    {{ form.department }}
+                    {{ form.department.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.ward.label_tag }}
+                    {{ form.ward }}
+                    {{ form.ward.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.change_ward_date.label_tag }}
+                    {{ form.change_ward_date }}
+                    {{ form.change_ward_date.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                {{ form.how_admitted.label_tag }}
+                    {{ form.how_admitted }}
+                    {{ form.how_admitted.errors }}
+            </div>
+            <div class="form-group col-md">
+                {{ form.current_status.label_tag }}
+                    {{ form.current_status }}
+                    {{ form.current_status.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+                {{ form.is_discharged.label_tag }}
+                    {{ form.is_discharged }}
+                    {{ form.is_discharged.errors }}
+            </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                {{ form.discharged_hospital_date.label_tag }}
+                    {{ form.discharged_hospital_date }}
+                    {{ form.discharged_hospital_date.errors }}
+            </div>
+            <div class="form-group col-md">
+                {{ form.cause_discharged.label_tag }}
+                    {{ form.cause_discharged }}
+                    {{ form.cause_discharged.errors }}
+            </div>
+        </div>
+        <div class="text-right m-3">
+            <button type="submit" class="btn btn-dark">Добавить</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

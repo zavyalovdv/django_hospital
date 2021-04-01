@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}}
+
+{% block content %}
+<div class="container">
+    <div class="row" style="width: 100%;">
+        <div class="col-md-6">
+            <table class="table" id="table">
+                <thead class="table table-striped">
+                <tr>
+                    <th>Врачи отделения</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item_doctor in doctor %}
+                <tr>
+                    <td> <a href="{% url 'doctor' item_doctor.pk %}">{{ item_doctor }}</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+        <table class="table">
+            <thead class="table table-striped">
+            <tr>
+                <th>Пациенты отделения</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item_patient in patient %}
+            <tr>
+                <td><a href="{% url 'patient' item_patient.pk %}">{{ item_patient }}</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

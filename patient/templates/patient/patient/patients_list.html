@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content%}
+{% comment %}
+
+{% load patient_tags %}
+{% get_patients as patients %}
+{% get_patients as doctors %}
+{% endcomment %}
+
+<table class="table" id="table">
+    <thead>
+    <tr>
+        <th>Номер страхового полиса</th>
+        <th>Пациент</th>
+        <th>Диагноз</th>
+        <th>Текущее состояние</th>
+        <th>Лечащий врач</th>
+        <th>Палата</th>
+        <th>Телефон</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in object_list %}
+    <tr>
+        <td><a href="{{ item.get_absolute_url }}">{{ item.social_security_number }}</a></td>
+        <td><a href="{{ item.get_absolute_url }}">{{ item.surname }} {{ item.name }} {{ item.second_name }}</a></td>
+        <td>{{ item.provisional_diagnosis }}</td>
+        {% if item.severity_disease == 'критическое' %}
+        <td class="severity_disease text-danger">{{ item.severity_disease }}</td>
+        {% else %}
+        <td class="severity_disease">{{ item.severity_disease }}</td>
+        {% endif %}
+        <td><a href="{{item.doctor.get_absolute_url}}">{{ item.doctor }}</a></td>
+        <td><a href="{% url 'ward' item.ward.pk %}">{{ item.ward.number }}</a></td>
+        <td>{{ item.ward.phone }}</td>
+        <td> <a href="{% url 'history' item.pk %}">История перемещений</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+   </table>
+{% endblock %}
