@@ -204,7 +204,6 @@ class HistoryDetail(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['history_last'] = Patient.history.last()
-        context['history'] = Patient.history.all()
-        context['patient'] = Patient.objects.all()
+        patient_history = MovementHistory.objects.filter(patient=self.kwargs['pk'])
+        context['patient_history'] = patient_history
         return context
