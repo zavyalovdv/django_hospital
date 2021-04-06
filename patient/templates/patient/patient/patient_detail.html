@@ -90,24 +90,12 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                     <label for="id_medical_history">История болезни:</label>
                     <textarea name="medical_history" cols="40" rows="10" class="form-control" id="id_medical_history"
                               readonly>{{ object.medical_history }}</textarea>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="id_medical_history"></label>
-
-                    <select name="history" id="id_history" size="13" aria-readonly="true">
-                        <option value="">История перемещений:</option>
-                        {% for item in movement %}
-                            <option>{{ item.ward_movement_date }}, {{ item.prev_ward_number }}
-                                -> {{ item.current_ward_number }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="id_department">Отделение:</label>

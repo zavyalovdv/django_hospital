@@ -1,10 +1,8 @@
 from django.db import models
-from .const.MODELS_CONST import *
+from .modelconst.MODELS_CONST import *
 from django.core.validators import RegexValidator
 from django.urls import reverse
-from django.dispatch import receiver
 from simple_history.models import HistoricalRecords
-from django.db.models.signals import pre_save
 from django.utils import timezone
 
 
@@ -13,7 +11,7 @@ class MovementHistory(models.Model):
         RegexValidator(regex='^[0-9]{3}$', message='Упс... Попробуйте снова')], help_text='В формате - 010', null=True)
     current_ward_number = models.CharField(verbose_name='Текущая палата', max_length=3, validators=[
         RegexValidator(regex='^[0-9]{3}$', message='Упс... Попробуйте снова')], help_text='В формате - 010', null=True)
-    patient = models.ForeignKey('Patient', verbose_name='Пациент', on_delete=models.PROTECT, null=True)
+    patient = models.ForeignKey('Patient', verbose_name='Пациент', on_delete=models.CASCADE, null=True)
     ward_movement_date = models.DateTimeField(verbose_name='Дата перемещения', null=True)
 
     def get_absolute_url(self):
@@ -109,25 +107,28 @@ class Patient(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.was_ward = self.ward
+        try:
+            self.was_ward = self.ward
+        except Exception:
+            pass
 
     class Meta:
         verbose_name = 'карточку пациента'
         verbose_name_plural = 'Карточки пациентов'
         ordering = ['-created_at']
-
+    
     def get_absolute_url(self):
         return reverse('patient', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return '{} {} {}'.format(self.surname, self.name, self.second_name)
+        return f'{self.surname} {self.name} {self.second_name}'
 
     def save(self, *args, **kwargs):
-        if self.ward != self.was_ward:
-            self.movement_date = timezone.now()
-            print(f'{self.was_ward} -> {self.ward}. {self.movement_date}')
-            movement_history = MovementHistory(prev_ward_number=self.was_ward, current_ward_number=self.ward,
+        try:
+            if self.ward != self.was_ward:
+                self.movement_date = timezone.now()
+                MovementHistory.objects.create(prev_ward_number=self.was_ward, current_ward_number=self.ward,
                                                patient=self, ward_movement_date=self.movement_date)
-            movement_history.save()
-
+        except Exception:
+            pass
         return super().save(*args, **kwargs)
