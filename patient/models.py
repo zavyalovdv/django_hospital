@@ -111,11 +111,6 @@ class Patient(models.Model):
             self.was_ward = self.ward
         except Exception:
             pass
-
-    class Meta:
-        verbose_name = 'карточку пациента'
-        verbose_name_plural = 'Карточки пациентов'
-        ordering = ['-created_at']
     
     def get_absolute_url(self):
         return reverse('patient', kwargs={'pk': self.pk})
@@ -125,10 +120,20 @@ class Patient(models.Model):
 
     def save(self, *args, **kwargs):
         try:
+            if self.was_ward:
+                pass
+        except Exception:
+            pass
+        else:
             if self.ward != self.was_ward:
                 self.movement_date = timezone.now()
                 MovementHistory.objects.create(prev_ward_number=self.was_ward, current_ward_number=self.ward,
-                                               patient=self, ward_movement_date=self.movement_date)
-        except Exception:
-            pass
-        return super().save(*args, **kwargs)
+                                                patient=self, ward_movement_date=self.movement_date)
+            self.change_ward_date = timezone.now()
+        finally:
+            return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Карточка пациента'
+        verbose_name_plural = 'Карточки пациентов'
+        ordering = ['-created_at']

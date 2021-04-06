@@ -5,22 +5,23 @@
 {% endblock %}}
 
 {% block content %}
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Пациенты в палате</th>
-        <th>Дата назначения в палату</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for item_patient in patient %}
-    <tr>
-        <td><a href="{% url 'patient' item_patient.pk %}">{{ item_patient }}</a></td>
-        <td>{{ item_patient.change_ward_date }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+<div class="container">
+    <h3 class="m-3">Палата № {{ ward }}, телефон палаты: {{ ward.phone }}</h3>
+    <table class="table m-3">
+        <thead>
+        <tr>
+            <th>Пациенты в палате</th>
+            <th>Дата назначения в палату</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item_patient in patient %}
+        <tr>
+            <td><a href="{% url 'patient' item_patient.pk %}">{{ item_patient }}</a></td>
+            <td>{{ item_patient.change_ward_date }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

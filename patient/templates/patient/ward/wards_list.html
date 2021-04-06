@@ -8,20 +8,22 @@
 
 {% load patient_tags %}
 {% get_wards as wards %}
-<table class="table" id="table">
-    <thead>
-    <tr>
-        <th>Номер палаты</th>
-        <th>Телефон палаты</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for item in wards %}
-    <tr>
-        <td><a href="{{ item.get_absolute_url }}">{{ item.number }}</a></td>
-        <td>{{ item.phone }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>Номер палаты</th>
+            <th>Телефон палаты</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in wards %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url }}">{{ item.number }}</a></td>
+            <td>{{ item.phone }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

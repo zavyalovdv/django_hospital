@@ -5,13 +5,287 @@
 {% endblock %}
 
 {% block content %}
-    <div class="col-md-8">
-        <h1>Редактирование новости</h1>
-        <form action="{% url 'patient_edit' object.pk %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {{ form.non_field.errors }}
-           <input type="submit" class="btn btn-dark" value="Применить">
-        </form>
+<div class="container" style="width: 50%;">
+    <div class="card-header mt-3">
+        <h3>Редактирование пациента: {{ object }}</h3>
     </div>
+    
+    {% comment %}
+    <form action="{% url 'patient_edit' object.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ object.non_field_errors }}
+        <div class="form-row mt-3">
+            <div class="form-group col-md">
+                <label for="id_surname">Фамилия:</label>
+                <input type="text" name="surname" class="form-control" maxlength="100" id="id_surname"
+                       value="{{ object.surname }}" >
+            </div>
+            <div class="form-group col-md">
+                <label for="id_name">Имя:</label>
+                <input type="text" name="name" class="form-control" maxlength="100" id="id_name"
+                       value="{{ object.name }}" >
+            </div>
+            <div class="form-group col-md">
+                <label for="id_second_name">Отчество:</label>
+                <input type="text" name="second_name" class="form-control" maxlength="100" id="id_second_name"
+                       value="{{ object.second_name }}" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                <label for="id_social_security_number">Номер социального страхования:</label>
+                <input type="text" name="social_security_number" class="form-control" maxlength="100"
+                       id="id_social_security_number"
+                       value="{{ object.social_security_number }}" >
+            </div>
+            <div class="form-group col-md">
+                <label for="id_admitted_hospital_date">Дата поступления в больницу:</label>
+                <input type="datetime" name="admitted_hospital_date" class="form-control" maxlength="100"
+                       id="id_admitted_hospital_date"
+                       value="{{ object.admitted_hospital_date }}" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="id_sex">Пол:</label>
+                <input type="text" name="sex" class="form-control" maxlength="100" id="id_sex"
+                       value="{{ object.sex }}" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_pre_age">Возраст:</label>
+                <input type="text" name="pre_age" class="form-control" maxlength="100" id="id_pre_age"
+                       value="{{ object.pre_age }}" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_height">Рост:</label>
+                <input type="text" name="height" class="form-control" maxlength="100" id="id_height"
+                       value="{{ object.height }}" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                <label for="id_hair_color">Цвет волос:</label>
+                <input type="text" name="hair_color" class="form-control" maxlength="100" id="id_hair_color"
+                       value="{{ object.hair_color }}" >
+            </div>
+            <div class="form-group col-md">
+                <label for="id_special_signs">Особые приметы:</label>
+                <input type="text" name="special_signs" class="form-control" maxlength="100" id="id_special_signs"
+                       value="{{ object.special_signs }}" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="id_provisional_diagnosis">Диагноз:</label>
+                <input type="text" name="provisional_diagnosis" class="form-control" maxlength="100"
+                       id="id_provisional_diagnosis"
+                       value="{{ object.provisional_diagnosis }}" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_severity_disease">Текущее состояние:</label>
+                <input type="text" name="severity_disease" class="form-control" maxlength="100"
+                       id="id_severity_disease"
+                       value="{{ object.severity_disease }}" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_doctor">Лечащий врач:</label>
+                <input type="text" name="doctor" class="form-control" maxlength="100" id="id_doctor"
+                       value="{{ object.doctor }}" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="id_medical_history">История болезни:</label>
+                <textarea name="medical_history" cols="40" rows="10" class="form-control" id="id_medical_history"
+                          >{{ object.medical_history }}</textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="id_department">Отделение:</label>
+                <input type="text" name="department" class="form-control" maxlength="100" id="id_department"
+                       value="{{ object.department }}" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_ward">Номер палаты:</label>
+                <select name="ward" id="id_ward" class="form-control"></select>
+                <input type="text" name="ward" class="form-control" maxlength="100" id="id_ward"
+                       value="{{ object.ward }}" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="id_change_ward_date">Дата определения в палату:</label>
+                <input type="datetime" name="change_ward_date" class="form-control" maxlength="100"
+                       id="id_change_ward_date"
+                       value="{{ object.change_ward_date }}" >
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                <label for="id_how_admitted">Как поступил:</label>
+                <input type="text" name="how_admitted" class="form-control" maxlength="100" id="id_how_admitted"
+                       value="{{ object.how_admitted }}" >
+            </div>
+            <div class="form-group col-md">
+                <label for="id_current_status">Текущий статус:</label>
+                <input type="text" name="current_status" class="form-control" maxlength="100" id="id_current_status"
+                       value="{{ object.current_status }}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_is_discharged"> Пациент выписан:</label>
+            <input type="checkbox" name="is_discharged" id="id_is_discharged" 
+                   value="" {% if object.is_discharged %} checked {% endif %}>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                <label for="id_discharged_hospital_date">Дата выписки из больницы:</label>
+                <input type="date" name="discharged_hospital_date" class="form-control" maxlength="100"
+                       id="id_discharged_hospital_date"
+                       value="{{ object.discharged_hospital_date }}" >
+            </div>
+            <div class="form-group col-md">
+                <label for="id_cause_discharged">Основание для выписки:</label>
+                <input type="text" name="cause_discharged" class="form-control" maxlength="100"
+                       id="id_cause_discharged"
+                       value="{{ object.cause_discharged }}" >
+            </div>
+        </div>
+        <div class="text-right m-3">
+            <input type="submit" class="btn btn-dark" value="Сохранить">
+        </div>
+    </form>
+    {% endcomment %}
+    <form action="{% url 'patient_edit' object.pk %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field.errors }}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.surname.label_tag }}
+                    {{ form.surname }}
+                    {{ form.surname.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.name.label_tag }}
+                    {{ form.name }}
+                    {{ form.name.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.second_name.label_tag }}
+                    {{ form.second_name }}
+                    {{ form.second_name.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                {{ form.social_security_number.label_tag }}
+                    {{ form.social_security_number }}
+                    {{ form.social_security_number.errors }}
+            </div>
+            <div class="form-group col-md">
+                {{ form.admitted_hospital_date.label_tag }}
+                    {{ form.admitted_hospital_date }}
+                    {{ form.admitted_hospital_date.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.sex.label_tag }}
+                    {{ form.sex }}
+                    {{ form.sex.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.pre_age.label_tag }}
+                    {{ form.pre_age }}
+                    {{ form.pre_age.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.height.label_tag }}
+                    {{ form.height }}
+                    {{ form.height.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.hair_color.label_tag }}
+                    {{ form.hair_color }}
+                    {{ form.hair_color.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.special_signs.label_tag }}
+                    {{ form.special_signs }}
+                    {{ form.special_signs.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.provisional_diagnosis.label_tag }}
+                    {{ form.provisional_diagnosis }}
+                    {{ form.provisional_diagnosis.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.severity_disease.label_tag }}
+                    {{ form.severity_disease }}
+                    {{ form.severity_disease.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.doctor.label_tag }}
+                    {{ form.doctor }}
+                    {{ form.doctor.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+                {{ form.medical_history.label_tag }}
+                    {{ form.medical_history }}
+                    {{ form.medical_history.errors }}
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                {{ form.department.label_tag }}
+                    {{ form.department }}
+                    {{ form.department.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.ward.label_tag }}
+                    {{ form.ward }}
+                    {{ form.ward.errors }}
+            </div>
+            <div class="form-group col-md-4">
+                {{ form.change_ward_date.label_tag }}
+                    {{ form.change_ward_date }}
+                    {{ form.change_ward_date.errors }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                {{ form.how_admitted.label_tag }}
+                    {{ form.how_admitted }}
+                    {{ form.how_admitted.errors }}
+            </div>
+            <div class="form-group col-md">
+                {{ form.current_status.label_tag }}
+                    {{ form.current_status }}
+                    {{ form.current_status.errors }}
+            </div>
+        </div>
+        <div class="form-group">
+                {{ form.is_discharged.label_tag }}
+                    {{ form.is_discharged }}
+                    {{ form.is_discharged.errors }}
+            </div>
+        <div class="form-row">
+            <div class="form-group col-md">
+                {{ form.discharged_hospital_date.label_tag }}
+                    {{ form.discharged_hospital_date }}
+                    {{ form.discharged_hospital_date.errors }}
+            </div>
+            <div class="form-group col-md">
+                {{ form.cause_discharged.label_tag }}
+                    {{ form.cause_discharged }}
+                    {{ form.cause_discharged.errors }}
+            </div>
+        </div>
+       <input type="submit" class="btn btn-dark" value="Сохранить">
+    </form>
+    </div>
+</div>
 {% endblock %}

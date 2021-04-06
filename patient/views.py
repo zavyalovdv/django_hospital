@@ -9,11 +9,11 @@ from django.views.generic.detail import SingleObjectMixin
 from django.dispatch import receiver
 
 
-class HomeHospital(ListView):
+class HomePage(ListView):
     template_name = 'patient/home/home.html'
 
     def get_queryset(self):
-        return HttpResponse('<h1>User hello</h1>')
+        return HttpResponse('')
 
 
 class PatientsList(ListView):
@@ -64,10 +64,6 @@ class PatientUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-
-
-class PatientDel(DeleteView):
-    pass
 
 
 class PatientCreate(CreateView):

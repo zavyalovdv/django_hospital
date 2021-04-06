@@ -9,23 +9,24 @@
     {% load patient_tags %}
     {% get_doctors as doctors %}
 {% endcomment %}
-
-<table class="table" id="table">
-    <thead>
-    <tr>
-        <th>ФИО</th>
-        <th>Отделение</th>
-        <th>Стаж</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for item in object_list %}
-    <tr>
-        <td><a href="{{ item.get_absolute_url }}">{{ item }}</a></td>
-        <td><a href="{% url 'department' item.pk %}">{{ item.department.name }}</a></td>
-        <td>{{ item.severity_disease }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <table class="table" id="table">
+        <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Отделение</th>
+            <th>Стаж</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in object_list %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url }}">{{ item }}</a></td>
+            <td><a href="{% url 'department' item.pk %}">{{ item.department.name }}</a></td>
+            <td>{{ item.experience }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

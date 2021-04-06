@@ -3,7 +3,7 @@ from hospital.settings import *
 from .views import *
 
 urlpatterns = [
-    path('', HomeHospital.as_view(), name='home'),
+    path('', HomePage.as_view(), name='home'),
     path('patients/', PatientsList.as_view(), name='patients'),
     path('patient/<int:pk>/', PatientDetail.as_view(), name='patient'),
     path('patient/edit/<int:pk>/', PatientUpdate.as_view(), name='patient_edit'),

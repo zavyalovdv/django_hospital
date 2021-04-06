@@ -5,25 +5,25 @@
 {% endblock %}}
 
 {% block content %}
-
-<table class="table">
-    <h2>{{ patient }}</h2>
-    <thead>
-    <tr>
-        <th>Дата перемещения</th>
-        <th>Откуда</th>
-        <th>Куда</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for item_patient in patient_history %}
-            <tr>
-                <td>{{ item_patient.ward_movement_date }}</td>
-                <td>{{ item_patient.prev_ward_number }}</td>
-                <td>{{ item_patient.current_ward_number }}</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+<div class="container">
+    <table class="table">
+        <h2>{{ patient }}</h2>
+        <thead>
+        <tr>
+            <th>Дата перемещения</th>
+            <th>Откуда</th>
+            <th>Куда</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item_patient in patient_history %}
+                <tr>
+                    <td>{{ item_patient.ward_movement_date }}</td>
+                    <td>{{ item_patient.prev_ward_number }}</td>
+                    <td>{{ item_patient.current_ward_number }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

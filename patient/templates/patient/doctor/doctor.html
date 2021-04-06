@@ -5,16 +5,20 @@
 {% endblock %}}
 
 {% block content %}
-
+<div class="container">
     <div class="card" style="width: 100%; margin-top: 25px; margin: auto">
-        <div class="card-header">
-            Врач: {{ doctor }}
+        <div class="card-header mt-3">
+                <h3>{{ doctor }}</h3>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item card-text">Текущие пациенты:
-            {% for item in patient %}
-            <li class="list-group-item card-text text-muted"><a href="{% url 'patient' item.pk %}">{{ item }}</a></li>
-            {% endfor %}
-        </ul>
+        <p class="ml-3 mt-3">Дата рождения: {{ doctor.date_of_birth }}</p>
+        <p class="ml-3">Стаж работы: {{ doctor.experience }}</p>
+        <p class="ml-3">Отделение: <a href="{% url 'department' doctor.pk %}">{{ doctor.department }}</a></p>
     </div>
+    <ul class="list-group list-group-flush mt-3">
+        <li class="list-group-item card-text"><h5>Текущие пациенты:</h5>
+        {% for item in patient %}
+        <li class="list-group-item card-text text-muted"><a href="{% url 'patient' item.pk %}">{{ item }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
