@@ -15,4 +15,6 @@ urlpatterns = [
     path('wards/', WardsList.as_view(), name='wards'),
     path('ward/<int:pk>/', show_ward, name='ward'),
     path('history/<int:pk>/', HistoryDetail.as_view(), name='history'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
 ]

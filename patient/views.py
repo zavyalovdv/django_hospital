@@ -1,7 +1,8 @@
 from django.http import HttpResponseRedirect
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from patient.models import *
-from .forms import PatientForm
+from .forms import PatientForm, UserLoginForm
 from django.views.generic.edit import CreateView, UpdateView
 from django.db.models.signals import pre_save
 from django.views.generic import ListView, DetailView, DeleteView, FormView
@@ -203,3 +204,18 @@ class HistoryDetail(DeleteView):
         patient_history = MovementHistory.objects.filter(patient=self.kwargs['pk'])
         context['patient_history'] = patient_history
         return context
+
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request ,user)
+            return redirect('home')
+    else:
+        form = UserLoginForm()
+    return render(request, template_name='patient/login/login.html', context={'form': form})
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
