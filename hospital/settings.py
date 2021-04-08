@@ -1,5 +1,7 @@
 import os
 
+# from patient.access import RequireLoginMiddleware
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,6 +40,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
+    # 'patient.access.RequireLoginMiddleware',
+
 ]
 
 ROOT_URLCONF = 'hospital.urls'
@@ -123,3 +127,11 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+LOGIN_REQUIRED_URLS = (
+    r'/(.*)$',
+)
+
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+    r'/login(.*)$',
+)

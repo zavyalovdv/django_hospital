@@ -12,7 +12,7 @@
         </div>
         <p class="ml-3 mt-3">Дата рождения: {{ doctor.date_of_birth }}</p>
         <p class="ml-3">Стаж работы: {{ doctor.experience }}</p>
-        <p class="ml-3">Отделение: <a href="{% url 'department' doctor.pk %}">{{ doctor.department }}</a></p>
+        <p class="ml-3">Отделение: <a href="{% url 'department' doctor.department.pk %}">{{ doctor.department }}</a></p>
     </div>
     <ul class="list-group list-group-flush mt-3">
         <li class="list-group-item card-text"><h5>Текущие пациенты:</h5>

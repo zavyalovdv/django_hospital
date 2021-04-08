@@ -1,23 +1,25 @@
-from django.http import HttpResponseRedirect
-from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from patient.models import *
-from .forms import PatientForm, UserLoginForm
 from django.views.generic.edit import CreateView, UpdateView
-from django.db.models.signals import pre_save
 from django.views.generic import ListView, DetailView, DeleteView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.dispatch import receiver
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from patient.models import *
+from .forms import PatientForm, UserLoginForm
 
 
 class HomePage(ListView):
     template_name = 'patient/home/home.html'
 
+    #Required method
     def get_queryset(self):
         return HttpResponse('')
 
 
-class PatientsList(ListView):
+class PatientsList(LoginRequiredMixin ,ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient/patient/patients_list.html'
     extra_context = {
@@ -28,7 +30,6 @@ class PatientsList(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(PatientsList, self).get_context_data(**kwargs)
-        # ward = Ward.objects.get(self.get.number)
         history = Patient.history.all()
         context['title'] = 'Список пациентов'
         return context
@@ -37,13 +38,13 @@ class PatientsList(ListView):
         return Patient.objects.filter(is_discharged=False)
 
 
-class PatientDetail(DetailView):
+class PatientDetail(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Patient
     form_class = PatientForm
     template_name = 'patient/patient/patient_detail.html'
     context_object_name = 'object'
-    movement_uniq = {}
-    movement_list = []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,7 +58,9 @@ class PatientDetail(DetailView):
         return context
 
 
-class PatientUpdate(UpdateView):
+class PatientUpdate(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Patient
     form_class = PatientForm
     template_name = 'patient/patient/patient_update.html'
@@ -67,13 +70,17 @@ class PatientUpdate(UpdateView):
         return context
 
 
-class PatientCreate(CreateView):
+class PatientCreate(LoginRequiredMixin, CreateView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Patient
     form_class = PatientForm
     template_name = 'patient/patient/add_patient.html'
 
 
-class DoctorsList(ListView):
+class DoctorsList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Doctor
     template_name = 'patient/doctor/doctors_list.html'
     extra_context = {
@@ -82,7 +89,9 @@ class DoctorsList(ListView):
     allow_empty = False
 
 
-class DepartmentsList(ListView):
+class DepartmentsList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Department
     template_name = 'patient/department/departments_list.html'
     extra_context = {
@@ -91,7 +100,9 @@ class DepartmentsList(ListView):
     allow_empty = False
 
 
-class WardsList(ListView):
+class WardsList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Ward
     template_name = 'patient/ward/wards_list.html'
     extra_context = {
@@ -100,101 +111,48 @@ class WardsList(ListView):
     allow_empty = False
 
 
-# def show_patients(request):
-#     context = {
-#         'title': 'Пациенты',
-#     }
-#     return render(request, template_name='patient/patient/patients_list.html', context=context)
+class DoctorDetail(LoginRequiredMixin, DetailView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Doctor
+    template_name = 'patient/doctor/doctor.html'
+    context_object_name = 'doctor'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient = Patient.objects.filter(doctor=self.kwargs['pk'])
+        context['patient'] = patient
+        return context
 
 
-# def show_patient(request, pk):
-#     patient = Patient.objects.get(pk=pk)
-#     context = {
-#         'patient': patient,
-#         'title': 'Пациент: ',
-#     }
-#     return render(request, template_name='patient/patient/patient_detail.html', context=context)
+class DepartmentDetail(LoginRequiredMixin, DetailView):
+    model = Department
+    template_name = 'patient/department/department.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        doctor = Doctor.objects.filter(department=self.kwargs['pk'])
+        patient = Patient.objects.filter(department=self.kwargs['pk'])
+        context['patient'] = patient
+        context['doctor'] = doctor
+        return context
 
 
-# def show_doctors(request):
-#     context = {
-#         'title': 'Врачи',
-#     }
-#     return render(request, template_name='patient/doctor/doctors.html', context=context)
+class WardDetail(LoginRequiredMixin, DetailView):
+    model = Ward
+    template_name = 'patient/ward/ward.html'
+    context_object_name = 'ward'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        patient = Patient.objects.filter(ward=self.kwargs['pk'])
+        context['patient'] = patient
+        return context
 
 
-def show_doctor(request, pk):
-    patient = Patient.objects.filter(doctor_id=pk)
-    doctor = Doctor.objects.get(pk=pk)
-    context = {
-        'doctor': doctor,
-        'title': 'Пациент',
-        'patient': patient,
-    }
-    return render(request, template_name='patient/doctor/doctor.html', context=context)
-
-
-# def show_departments(request):
-#     context = {
-#     }
-#     return render(request, template_name='patient/department/departments.html', context=context)
-
-def show_movement_history(request, pk):
-    patient = Patient.objects.filter(ward_id=pk)
-    ward = Ward.objects.filter(ward_id=pk)
-    ward_movement_date = MovementHistory.ward_movement_date(ward_id=pk)
-    context = {
-        'title': 'Перемещения',
-        'patient': patient,
-        'ward': ward,
-        'ward_movement_date': ward_movement_date,
-    }
-    return render(request, template_name='www.www', context=context)
-
-
-def show_department(request, pk):
-    doctor = Doctor.objects.filter(department_id=pk)
-    patient = Patient.objects.filter(department_id=pk)
-    department = Department.objects.get(pk=pk)
-    context = {
-        'title': 'Отделения',
-        'department': department,
-        'doctor': doctor,
-        'patient': patient,
-    }
-    return render(request, template_name='patient/department/department.html', context=context)
-
-
-# def show_wards(request):
-#     context = {
-#         'title': 'Палаты',
-#     }
-#     return render(request, template_name='patient/ward/wards.html', context=context)
-
-
-def show_ward(request, pk):
-    patient = Patient.objects.filter(ward_id=pk)
-    ward = Ward.objects.get(pk=pk)
-    context = {
-        'title': 'Палаты',
-        'ward': ward,
-        'patient': patient,
-    }
-    return render(request, template_name='patient/ward/ward.html', context=context)
-
-
-# def add_patient(request):
-#     if request.method == 'POST':
-#         form = PatientForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('patients')
-#     else:
-#         form = PatientForm()
-#     return render(request, 'patient/patient/add_patient.html', {'form': form, 'title': 'Новый пациент'})
-
-
-class HistoryDetail(DeleteView):
+class HistoryDetail(LoginRequiredMixin, DeleteView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
     model = Patient
     template_name = 'patient/history/history.html'
     context_object_name = 'patient'
@@ -204,18 +162,3 @@ class HistoryDetail(DeleteView):
         patient_history = MovementHistory.objects.filter(patient=self.kwargs['pk'])
         context['patient_history'] = patient_history
         return context
-
-def user_login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request ,user)
-            return redirect('home')
-    else:
-        form = UserLoginForm()
-    return render(request, template_name='patient/login/login.html', context={'form': form})
-
-def user_logout(request):
-    logout(request)
-    return redirect('login')
