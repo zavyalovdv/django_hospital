@@ -40,3 +40,8 @@ a:active {
     text-align: right;
     background-color: #cccccc;
 }
+
+body {
+    background: #dae4e2;
+    background-position: center;
+}

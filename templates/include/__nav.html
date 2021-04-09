@@ -1,5 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #adc9ea">
-    <a class="navbar-brand" href="{% url 'home' %}">Клиническая больница</a>
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="Logo"></a>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             {% if request.user.is_authenticated %}
