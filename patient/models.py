@@ -1,10 +1,10 @@
 from django.db import models
-from .modelconst.MODELS_CONST import *
+from .const.MODELS_CONST import *
 from django.core.validators import RegexValidator
 from django.urls import reverse
 from simple_history.models import HistoricalRecords
 from django.utils import timezone
-
+from django.core.exceptions import ObjectDoesNotExist
 
 class MovementHistory(models.Model):
     prev_ward_number = models.CharField(verbose_name='Предыдущая палата', max_length=4, validators=[
@@ -109,7 +109,7 @@ class Patient(models.Model):
         super().__init__(*args, **kwargs)
         try:
             self.was_ward = self.ward
-        except Exception:
+        except ObjectDoesNotExist:
             pass
     
     def get_absolute_url(self):
@@ -122,7 +122,7 @@ class Patient(models.Model):
         try:
             if self.was_ward:
                 pass
-        except Exception:
+        except ObjectDoesNotExist:
             pass
         else:
             if self.ward != self.was_ward:
