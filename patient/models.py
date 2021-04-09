@@ -1,3 +1,5 @@
+import logging
+
 from django.db import models
 from .const.MODELS_CONST import *
 from django.core.validators import RegexValidator
@@ -5,6 +7,10 @@ from django.urls import reverse
 from simple_history.models import HistoricalRecords
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
+
+
+logger = logging.getLogger(__name__)
+
 
 class MovementHistory(models.Model):
     prev_ward_number = models.CharField(verbose_name='Предыдущая палата', max_length=4, validators=[
@@ -110,7 +116,7 @@ class Patient(models.Model):
         try:
             self.was_ward = self.ward
         except ObjectDoesNotExist:
-            pass
+            logger.warning('Patient, atribute "was_ward" does_not_exist')
     
     def get_absolute_url(self):
         return reverse('patient', kwargs={'pk': self.pk})
@@ -123,7 +129,7 @@ class Patient(models.Model):
             if self.was_ward:
                 pass
         except ObjectDoesNotExist:
-            pass
+            logger.warning('Patient, atribute "was_ward" does_not_exist')
         else:
             if self.ward != self.was_ward:
                 self.movement_date = timezone.now()
