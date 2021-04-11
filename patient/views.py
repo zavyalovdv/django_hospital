@@ -20,6 +20,8 @@ class HomePage(ListView):
 class PatientsList(LoginRequiredMixin ,ListView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
+    paginate_by = 20
+
     model = Patient
     template_name = 'patient/patient/patients_list.html'
     extra_context = {
@@ -89,28 +91,6 @@ class DoctorsList(LoginRequiredMixin, ListView):
     allow_empty = False
 
 
-class DepartmentsList(LoginRequiredMixin, ListView):
-    login_url = '/login/'
-    redirect_field_name = 'redirect_to'
-    model = Department
-    template_name = 'patient/department/departments_list.html'
-    extra_context = {
-        'title': 'Список отделений',
-    }
-    allow_empty = False
-
-
-class WardsList(LoginRequiredMixin, ListView):
-    login_url = '/login/'
-    redirect_field_name = 'redirect_to'
-    model = Ward
-    template_name = 'patient/ward/wards_list.html'
-    extra_context = {
-        'title': 'Список палат',
-    }
-    allow_empty = False
-
-
 class DoctorDetail(LoginRequiredMixin, DetailView):
     login_url = '/login/'
     redirect_field_name = 'redirect_to'
@@ -125,6 +105,17 @@ class DoctorDetail(LoginRequiredMixin, DetailView):
         return context
 
 
+class DepartmentsList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Department
+    template_name = 'patient/department/departments_list.html'
+    extra_context = {
+        'title': 'Список отделений',
+    }
+    allow_empty = False
+
+
 class DepartmentDetail(LoginRequiredMixin, DetailView):
     model = Department
     template_name = 'patient/department/department.html'
@@ -136,6 +127,17 @@ class DepartmentDetail(LoginRequiredMixin, DetailView):
         context['patient'] = patient
         context['doctor'] = doctor
         return context
+
+
+class WardsList(LoginRequiredMixin, ListView):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+    model = Ward
+    template_name = 'patient/ward/wards_list.html'
+    extra_context = {
+        'title': 'Список палат',
+    }
+    allow_empty = False
 
 
 class WardDetail(LoginRequiredMixin, DetailView):

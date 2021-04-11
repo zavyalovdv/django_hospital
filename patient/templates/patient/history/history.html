@@ -19,7 +19,7 @@
             {% for item_patient in patient_history %}
                 <tr>
                     <td>{{ item_patient.ward_movement_date }}</td>
-                    <td>{{ item_patient.prev_ward_number }}</td>
+                    <td><a href="{% url 'ward' item_patient.pk %}">{{ item_patient.prev_ward_number }}</a></td>
                     <td>{{ item_patient.current_ward_number }}</td>
                 </tr>
             {% endfor %}

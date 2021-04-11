@@ -117,6 +117,7 @@ class Patient(models.Model):
             self.was_ward = self.ward
         except ObjectDoesNotExist:
             logger.warning('Patient, atribute "was_ward" does_not_exist')
+            logger.warning(self.__dict__)
     
     def get_absolute_url(self):
         return reverse('patient', kwargs={'pk': self.pk})
@@ -130,6 +131,7 @@ class Patient(models.Model):
                 pass
         except ObjectDoesNotExist:
             logger.warning('Patient, atribute "was_ward" does_not_exist')
+            logger.warning(self.__dict__)
         else:
             if self.ward != self.was_ward:
                 self.movement_date = timezone.now()

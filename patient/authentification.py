@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from .forms import UserLoginForm
 
+
 def user_login(request):
     if request.method == 'POST':
         form = UserLoginForm(data=request.POST)
@@ -12,6 +13,7 @@ def user_login(request):
     else:
         form = UserLoginForm()
     return render(request, template_name='patient/login/login.html', context={'form': form})
+
 
 def user_logout(request):
     logout(request)

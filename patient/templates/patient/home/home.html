@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block content%}
-<div class="container" style="background: url({% static 'minzdrav.png' %}) no-repeat; background-position: center; height: 80%; width: 100%;">
-    
-</div>
+{% if request.user.is_authenticated %}
+    <div class="container" style="background: url({% static 'minzdrav.png' %}) no-repeat; background-position: center; height: 80%; width: 100%;">
+        
+    </div>
+{% endif %}
+
 {% endblock %}

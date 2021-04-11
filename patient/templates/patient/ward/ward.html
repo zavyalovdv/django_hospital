@@ -6,7 +6,9 @@
 
 {% block content %}
 <div class="container">
-    <h3 class="m-3">Палата № {{ ward }}, телефон палаты: {{ ward.phone }}</h3>
+    <h3 class="m-3">Палата № {{ ward }}</h3>
+    <h3 class="m-3">Отделение: {{ ward.department }}</h3>
+    <h3 class="m-3">Телефон палаты: {{ ward.phone }}</h3>
     <table class="table m-3">
         <thead>
         <tr>

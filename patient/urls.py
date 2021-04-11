@@ -3,6 +3,7 @@ from hospital.settings import *
 from .views import *
 from .authentification import user_login, user_logout
 
+
 urlpatterns = [
     path('', HomePage.as_view(), name='home'),
     path('patients/', PatientsList.as_view(), name='patients'),

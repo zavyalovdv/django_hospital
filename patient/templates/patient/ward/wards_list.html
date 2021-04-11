@@ -14,6 +14,7 @@
         <tr>
             <th>Номер палаты</th>
             <th>Телефон палаты</th>
+            <th>Отделение</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
         <tr>
             <td><a href="{{ item.get_absolute_url }}">{{ item.number }}</a></td>
             <td>{{ item.phone }}</td>
+            <td><a href="{% url 'department' item.department.pk %}">{{ item.department }}</a></td>
         </tr>
         {% endfor %}
         </tbody>
