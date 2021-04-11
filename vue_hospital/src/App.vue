@@ -2,6 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <router-view/>
+    <a href="http://127.0.0.1:8000">Django Hospital</a>
   </div>
 </template>
 

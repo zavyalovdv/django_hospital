@@ -1,6 +1,7 @@
 from django.urls import path
 from hospital.settings import *
 from .views import *
+from .api_views import *
 from .authentification import user_login, user_logout
 
 
@@ -19,4 +20,5 @@ urlpatterns = [
     path('history/<int:pk>/', HistoryDetail.as_view(), name='history'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+    path('api/patients', APIPatientsListView.as_view(), name='api_patients')
 ]
