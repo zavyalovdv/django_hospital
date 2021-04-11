@@ -24,3 +24,4 @@ class DoctorsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = '__all__'
+
