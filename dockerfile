@@ -2,14 +2,14 @@ FROM python:3
 
 MAINTAINER @ZVPROJECT "daniilzavialov@yandex.ru"
 
-WORKDIR /home/$USER/
+WORKDIR /usr/src/app/
 
 RUN apt update && apt install redis-server git -y
 
 # RUN chown -R ubuntu:ubuntu /usr/src/app/
 
 RUN git clone https://github.com/zavyalovdv/django_hospital.git
-RUN cd django_hospital/
+WORKDIR /usr/src/app/django_hospital/
 
 # RUN chown -R $USER /usr/src/app/*
 
