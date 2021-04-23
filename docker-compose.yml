@@ -5,7 +5,7 @@ services:
         image: redis
         restart: always
         volumes:
-        - ./:/usr/src/app/
+        - ./:/usr/src/app/django_hospital/
         ports:
         - 6379:6379
     web:
