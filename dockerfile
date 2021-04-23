@@ -11,4 +11,4 @@ RUN chmod +x django_hospital/entrypoint.sh
 
 RUN pip3 install -r django_hospital/requirements.txt
 
-ENTRYPOINT ["/usr/src/app/django_hospital/entrypoint.sh"]
+ENTRYPOINT ["django_hospital/entrypoint.sh"]
