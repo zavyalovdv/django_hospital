@@ -4,7 +4,7 @@ python3 manage.py makemigrations --no-input
 
 python3 manage.py migrate --no-input
 
-echo DEBUG = False >> hospital/settings.py
+# echo DEBUG = False >> hospital/settings.py
 
 # exec celery --app=hospital worker --loglevel=info &
 
