@@ -8,7 +8,7 @@ RUN apt update && apt install redis-server git python3-pip python3-venv -y
 
 RUN python3 -m venv venv
 
-RUN source venv/bin/activate
+RUN source /usr/src/app/venv/bin/activate
 
 RUN git clone https://github.com/zavyalovdv/django_hospital.git
 WORKDIR /usr/src/app/django_hospital/
