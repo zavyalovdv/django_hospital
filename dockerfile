@@ -8,7 +8,7 @@ RUN git clone https://github.com/zavyalovdv/django_hospital.git
 RUN cd /usr/src/app/django_hospital/
 # COPY . .
 
-RUN chmod +x entrypoint.sh
+RUN chmod +x /usr/src/app/django_hospital/entrypoint.sh
 
 RUN pip3 install -r requirements.txt
 
