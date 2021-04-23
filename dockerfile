@@ -10,6 +10,6 @@ RUN cd /usr/src/app/django_hospital/
 
 RUN chmod +x /usr/src/app/django_hospital/entrypoint.sh
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r /usr/src/app/django_hospital/requirements.txt
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/django_hospital/entrypoint.sh"]
