@@ -29,4 +29,4 @@ RUN pip3 install -r requirements.txt
 # ENV db_password="$db_password"
 # ENV db_username="$db_username"
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ entrypoint.sh ]
