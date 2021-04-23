@@ -90,8 +90,8 @@ class Patient(models.Model):
     height = models.CharField('Примерный рост, (см)', max_length=15, choices=PRE_HEIGHT)
     hair_color = models.CharField('Цвет волос', max_length=15, choices=HAIR_COLOR)
     special_signs = models.CharField('Особые приметы', max_length=255, )
-    admitted_hospital_date = models.DateTimeField('Дата и время поступления в больницу')
-    severity_disease = models.CharField('Текущее состояние', max_length=15, choices=PATIENT_SEVERITY_DISEASE)
+    admitted_hospital_date = models.DateTimeField('Дата и время поступления в больницу', blank=True, null=True)
+    severity_disease = models.CharField('Текущее состояние', max_length=15, choices=PATIENT_SEVERITY_DISEASE, blank=True, null=True)
     provisional_diagnosis = models.CharField('Предварительный диагноз', max_length=255)
     medical_history = models.TextField('История болезни', blank=True)
     department = models.ForeignKey(
@@ -101,7 +101,7 @@ class Patient(models.Model):
     ward = models.ForeignKey(
         Ward, verbose_name='Номер палаты', on_delete=models.PROTECT, related_name='ward_number_to_patient')
     change_ward_date = models.DateTimeField(verbose_name='Дата назнечения в палату')
-    current_status = models.CharField('Текущий статус', max_length=30, choices=CURRENT_STATUS)
+    current_status = models.CharField('Текущий статус', max_length=30, choices=CURRENT_STATUS, )
     how_admitted = models.CharField('Способ обращения', max_length=30, choices=HOW_ADMITTED)
     created_at = models.DateTimeField('Дата создания профиля', auto_now_add=True)
     updated_at = models.DateTimeField('Последняя дата редактирования', auto_now=True)

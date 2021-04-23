@@ -9,7 +9,16 @@ class APIPatientsListView(APIView):
     def get(self, request):
         patients = Patient.objects.all()
         serializer = PatientsListSerializer(patients, many=True)
-        return Response(serializer.data)
+        return Response({'patient': serializer.data})
+
+    def post(self, request):
+        patient = request.data.get('patient')
+        serializer = PatientsListSerializer(data=patient)
+        if serializer.is_valid(raise_exception=True):
+            patient_saved = serializer.save()
+            return Response({'success': 'Patient created'})
+        else:
+            return Response(data='WRONG', status=500)
 
 
 class APIPatientDetailView(APIView):
@@ -59,3 +68,18 @@ class APIWardDetailView(APIView):
         ward = Ward.objects.get(pk=pk)
         serializer = WardDetailSerializer(ward)
         return Response(serializer.data)
+
+
+class APICreatePatientView(APIView):
+    def get(self, request):
+        return Response(status=200, data='POST Only')
+
+    def post(self, request):
+        serializer = Pa(data=request.data)
+        print("SERIALIZER: ", serializer)
+        print("DATA: ",request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response(status=500)

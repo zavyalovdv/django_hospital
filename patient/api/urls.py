@@ -10,5 +10,6 @@ urlpatterns = [
     path('departments/', APIDepartmentsListView.as_view(), name='api_departments'),
     path('department/<int:pk>', APIDepartmentDetailView.as_view(), name='api_department'),
     path('wards/', APIWardsListView.as_view(), name='api_wards'),
-    path('ward/<int:pk>', APIWardDetailView.as_view(), name='api_ward'),
+    path('ward/<int:pk>/', APIWardDetailView.as_view(), name='api_ward'),
+    path('create-patient/', APIPatientsListView.as_view(), name='api_create_patient'),
 ]

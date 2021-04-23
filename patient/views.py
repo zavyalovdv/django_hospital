@@ -37,7 +37,7 @@ class PatientsList(LoginRequiredMixin ,ListView):
         return context
 
     def get_queryset(self):
-        return Patient.objects.filter(is_discharged=False)
+        return Patient.objects.filter(is_discharged=False).select_related('ward', 'doctor', 'department')
 
 
 class PatientDetail(LoginRequiredMixin, DetailView):
@@ -90,6 +90,9 @@ class DoctorsList(LoginRequiredMixin, ListView):
     }
     allow_empty = False
 
+    def get_queryset(self):
+        return Doctor.objects.all().select_related('department')
+
 
 class DoctorDetail(LoginRequiredMixin, DetailView):
     login_url = '/login/'
@@ -138,6 +141,9 @@ class WardsList(LoginRequiredMixin, ListView):
         'title': 'Список палат',
     }
     allow_empty = False
+
+    def get_queryset(self):
+        return Ward.objects.all().select_related('department')
 
 
 class WardDetail(LoginRequiredMixin, DetailView):
