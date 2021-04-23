@@ -1,7 +1,5 @@
 FROM python:3.8
 
-MAINTAINER @ZVPROJECT "daniilzavialov@yandex.ru"
-
 WORKDIR /usr/src/app/
 
 RUN apt update && apt install redis-server git -y
