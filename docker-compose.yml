@@ -1,13 +1,13 @@
 version: "3"
 
 services:
-    # redis:
-    #     image: redis
-    #     restart: always
-    #     volumes:
-    #     - ./:/usr/src/app/django_hospital/
-    #     ports:
-    #     - 6379:6379
+    redis:
+        image: redis
+        restart: always
+        volumes:
+        - ./:/usr/src/app/django_hospital/
+        ports:
+        - 6379:6379
     web:
         build:
             context: ./
@@ -16,6 +16,5 @@ services:
             - ./:/usr/src/app/
         ports: 
             - '8000:8000'
-        command: gunicorn hospital.wsgi:application --bind 0.0.0.0:8000
         env_file:
             - ../VARENV.env
