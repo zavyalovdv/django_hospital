@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8
 
 MAINTAINER @ZVPROJECT "daniilzavialov@yandex.ru"
 
