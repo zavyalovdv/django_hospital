@@ -4,4 +4,6 @@ python3 manage.py makemigrations --no-input
 
 python3 manage.py migrate --no-input
 
-exec gunicorn hospital.wsgi:application -b 0.0.0.0:8000 --reload
+exec celery --app=hospital worker --loglevel=info &
+
+exec gunicorn hospital.wsgi:application -b 0.0.0.0:8000 --reload &

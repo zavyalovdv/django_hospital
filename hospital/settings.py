@@ -3,14 +3,11 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 SECRET_KEY = os.getenv('django_hospital_secret_key')
-
 
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,9 +53,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'hospital.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -112,12 +107,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -134,18 +128,18 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'console': {
-            'format': '%(name)-12s %(levelname)-8s %(message)s'
-        },
+        # 'console': {
+        #     'format': '%(name)-12s %(levelname)-8s %(message)s'
+        # },
         'file': {
             'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
         }
     },
     'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'console'
-        },
+        # 'console': {
+        #     'class': 'logging.StreamHandler',
+        #     'formatter': 'console'
+        # },
         'file': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
@@ -156,20 +150,19 @@ LOGGING = {
     'loggers': {
         '': {
             'level': 'WARNING',
-            'handlers': ['console', 'file']
+            # 'handlers': ['console', 'file']
+            'handlers': ['file']
         }
     }
 }
 
 INTERNAL_IPS = [
-    # ...
     '127.0.0.1',
-    # ...
 ]
 
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = '6379'
-BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600} 
 CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
