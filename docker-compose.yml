@@ -1,13 +1,13 @@
 version: "3"
 
 services:
-    redis:
-        image: redis
-        restart: always
-        volumes:
-        - ./:/usr/src/app/django_hospital/
-        ports:
-        - 6379:6379
+    # redis:
+    #     image: redis
+    #     restart: always
+    #     volumes:
+    #     - ./:/usr/src/app/django_hospital/
+    #     ports:
+    #     - 6379:6379
     web:
         build:
             context: ./
