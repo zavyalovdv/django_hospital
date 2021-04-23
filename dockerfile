@@ -1,6 +1,6 @@
 FROM python:3.8
 
-WORKDIR /usr/src/app/
+WORKDIR /usr/src/app/django_hospital/
 
 RUN apt update && apt install redis-server -y
 
