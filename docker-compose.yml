@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+    redis:
+        image: redis
+        restart: always
+        volumes:
+        - ./:/usr/src/app/
+        ports:
+        - 6379:6379
     web:
         build:
             context: ./
