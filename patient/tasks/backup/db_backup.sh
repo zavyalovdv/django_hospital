@@ -1,7 +1,7 @@
 #!/bin/bash
-
-
+MONTH=`(date +"%m")`
+DATE=`(date +"%d-%m-%Y")`
 source ../venv/bin/activate
-pwd
-python3 manage.py dumpdata patient > fixtures.json
+mkdir patient/backups/$MONTH
+python3 manage.py dumpdata patient > patient/backups/$MONTH/$DATE-fixtures.json
 deactivate
