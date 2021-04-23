@@ -1,4 +1,4 @@
-command = '~/.local/lib/python3.8/site-packages'
+command = '/usr/src/app/venv/bin/gunicorn'
 pythonpath = '/usr/src/app/django_hospital/hospital'
 bind = '127.0.0.1:8000'
 workers = 1

@@ -2,9 +2,13 @@ FROM python:3.8
 
 WORKDIR /usr/src/app/
 
-RUN apt update && apt install redis-server git -y
+RUN apt update && apt install redis-server git python3-pip python3-venv -y
 
 # RUN chown -R ubuntu:ubuntu /usr/src/app/
+
+RUN python3 -m venv venv
+
+RUN source venv/bin/activate
 
 RUN git clone https://github.com/zavyalovdv/django_hospital.git
 WORKDIR /usr/src/app/django_hospital/
