@@ -2,7 +2,7 @@ FROM python:3
 
 MAINTAINER @ZVPROJECT "daniilzavialov@yandex.ru"
 
-# WORKDIR /usr/src/app/
+WORKDIR /home/$USER/
 
 RUN apt update && apt install redis-server git -y
 
