@@ -1,20 +1,24 @@
 version: "3"
 
 services:
-    # redis:
-    #     image: redis
-    #     restart: always
-    #     volumes:
-    #     - ./:/usr/src/app/django_hospital/
-    #     ports:
-    #     - 6379:6379
-    web:
+    redis:
+        image: redis
+        restart: always
+        volumes:
+        - ./:/usr/src/app/
+        ports:
+        - 6379:6379
+    django_hospital:
         build:
             context: ./
             dockerfile: Dockerfile
         volumes:
             - ./:/usr/src/app/
         ports: 
-            - '8000:8000'
+            - 8000:8000
         env_file:
             - ../VARENV.env
+        links:
+            - redis
+        depends_on:
+            - redis
