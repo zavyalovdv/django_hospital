@@ -6,6 +6,4 @@ python3 manage.py migrate --no-input
 
 echo DEBUG = False >> hospital/settings.py
 
-# celery --app=hospital worker --loglevel=warning &
-
 gunicorn hospital.wsgi:application -b 0.0.0.0:8000 --reload
